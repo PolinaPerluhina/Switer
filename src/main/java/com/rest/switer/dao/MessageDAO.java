@@ -24,27 +24,30 @@ public class MessageDAO {
     }
     
     private static void initMessages(){
-        messages.put("Message1", new Message("asd;ljgaod"));
-        messages.put("Message2", new Message("s;flgkjhskirfgjh[irw"));
-        messages.put("Message3", new Message("Firslfkghnklsfgnhkslfgnhst"));
-        messages.put("Message4", new Message("Firsosdhnjogfsjht"));
+        Message msg1 = new Message("hello", "Hi! How are you?");
+        Message msg2 = new Message("bye", "Good bye for now, see you later");
+        Message msg3 = new Message("question", "What are you going to do tonight?");
+        Message msg4 = new Message("compliment", "You look nice today");
+        
+        messages.put(msg1.getTitle(), msg1);
+        messages.put(msg2.getTitle(), msg2);
+        messages.put(msg3.getTitle(), msg3);
+        messages.put(msg4.getTitle(), msg4);        
     }
     
     public static Message getMessage(String title){
         return messages.get(title);
     }
     
-    public static void addMessage(String title, Message ms){
-        messages.put(title,ms);
+    public static void addMessage( Message ms){
+        messages.put(ms.getTitle(),ms);
     }
     
-    public static void updateMessage(String title, String newText){
-        Message ms = messages.get(title);
-        ms.setText(newText);
-        messages.put(title, ms);
+    public static void updateMessage(Message ms){       
+        messages.put(ms.getTitle(), ms);
     }
     
-    public void deleteMessage(String title){
+    public static void deleteMessage(String title){
         messages.remove(title);
     }
     
