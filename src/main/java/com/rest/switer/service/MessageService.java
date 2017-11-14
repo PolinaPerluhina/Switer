@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
 public class MessageService {
     
     // URI:
-    // /contextPath/servletPath/messages
+    // /switer-1.0/rest/messages
     @GET
     @Produces({ MediaType.APPLICATION_JSON})
     public List<Message> getAllMessages() {
