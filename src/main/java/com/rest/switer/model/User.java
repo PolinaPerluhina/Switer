@@ -9,7 +9,7 @@ package com.rest.switer.model;
  *
  * @author Palina_Piarlukhina
  */
-public class User {
+public class User extends Model {
     private long id;
     private String email;
     private String password;
