@@ -5,11 +5,16 @@
  */
 package com.rest.switer.dao.validation;
 
+import com.rest.switer.model.Model;
+
 /**
  *
  * @author Palina_Piarlukhina
  */
-public class Validation {
+public interface Validation {
+    public abstract void canBeAdded(Model m);
+    public abstract void canBeUpdated(Model m);
+    public abstract Model canBeDeleted(long id);
     
    
 }

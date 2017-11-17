@@ -8,6 +8,7 @@ package com.rest.switer.dao.validation;
 import com.rest.switer.dao.UserDAO;
 import com.rest.switer.exceptions.UserException;
 import static com.rest.switer.exceptions.errors.UserError.*;
+import com.rest.switer.model.Model;
 import com.rest.switer.model.User;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author Palina_Piarlukhina
  */
-public class UserValidation extends Validation {
+public class UserValidation implements Validation {
 
     public UserValidation() {
     }
@@ -39,6 +40,14 @@ public class UserValidation extends Validation {
 
     }
     
+    public static void idNotSet(User u){
+        int status = 403;
+        long id = u.getId();
+        if (id!= 0){
+            throw new UserException(status, NO_ADD_ID);
+        }
+    }
+
     public static void idPresent(User u) {
         int status = 400;
         List<User> all = UserDAO.getAllUsers();
@@ -50,10 +59,9 @@ public class UserValidation extends Validation {
         if (id < 0) {
             throw new UserException(status, NOT_VALID_ID);
         }
-        
 
     }
-    
+
     public static User doesUserExist(long id) {
         List<User> all = UserDAO.getAllUsers();
         boolean present = false;
@@ -82,14 +90,14 @@ public class UserValidation extends Validation {
                 if (user.getEmail().equals(email)) {
                     throw new UserException(status, EMAIL_USED);
                 }
-            }        
-            
+            }
+
         } catch (NullPointerException e) {
             throw new UserException(status, EMAIL_MISSED);
         }
 
     }
-    
+
     public static void emailPresent(User u) {
         int status = 400;
         List<User> all = UserDAO.getAllUsers();
@@ -97,8 +105,8 @@ public class UserValidation extends Validation {
             String email = u.getEmail();
             if (email.equals("")) {
                 throw new UserException(status, EMAIL_MISSED);
-            }          
-            
+            }
+
         } catch (NullPointerException e) {
             throw new UserException(status, EMAIL_MISSED);
         }
@@ -111,22 +119,31 @@ public class UserValidation extends Validation {
             String pass = u.getPassword();
             if (pass.equals("")) {
                 throw new UserException(status, NO_PASSWORD);
-            }            
+            }
         } catch (NullPointerException e) {
             throw new UserException(status, NO_PASSWORD);
         }
     }
 
-    public static void canBeAdded(User u) {
-        idValidation(u);
+    @Override
+    public void canBeAdded(Model m) {
+        User u = (User) m; 
+        idNotSet(u);
         emailValidation(u);
         passwordPresent(u);
     }
 
-    public static void canBeUpdated(User u) {
+    @Override
+    public void canBeUpdated(Model m) {
+        User u = (User) m;
         idPresent(u);
-        emailPresent(u);
-        passwordPresent(u);
+        
+
+    }
+
+    @Override
+    public Model canBeDeleted(long id) {
+        return (Model) doesUserExist(id);
     }
 
 }

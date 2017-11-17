@@ -15,6 +15,7 @@ public enum UserError {
     ID_USED(new ErrorDTO( 2, "Id is already used.")),
     ID_MISSED(new ErrorDTO( 3, "Id is missing.")),
     NO_USER(new ErrorDTO(7, "User with such id is not found")),
+    NO_ADD_ID(new ErrorDTO(10, "You can not set or edit id of employee")),
     
     //EMAIL VALIDATION
     NOT_VALID_EMAIL(new ErrorDTO( 4, "Email not valid.")),

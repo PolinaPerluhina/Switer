@@ -5,7 +5,9 @@
  */
 package com.rest.switer.dao;
 
+import com.rest.switer.dao.validation.UserValidation;
 import static com.rest.switer.dao.validation.UserValidation.*;
+import com.rest.switer.dao.validation.Validation;
 import com.rest.switer.model.User;
 import com.rest.switer.exceptions.UserException;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.List;
 public class UserDAO {
 
     private static List<User> allUsers = new ArrayList<User>();
+    public static Validation valid = new UserValidation();
 
     static {
         User user1 = new User(1223, "ivan@mail.com", "password1", "Ivan", "Ivanov", 25, "123-123-123");
@@ -29,7 +32,7 @@ public class UserDAO {
         allUsers.add(user3);
     }
 
-    public static User getUser(long id) throws UserException {        
+    public static User getUser(long id) throws UserException {
         return doesUserExist(id);
     }
 
@@ -38,24 +41,49 @@ public class UserDAO {
     }
 
     public static void addUser(User u) throws UserException {
-        canBeAdded(u);
+        valid.canBeAdded(u);
         allUsers.add(u);
 
     }
 
     public static void updateUserInfo(User u) throws UserException {
-        canBeUpdated(u);
-        for (int i = 0; i < allUsers.size(); i++) {
-            if (allUsers.get(i).getId() == u.getId()) {
-                allUsers.remove(i);
+        valid.canBeUpdated(u);       
+        for (User user: allUsers){
+            if (user.getId()==u.getId()){ 
+                u.fillMissedFields(user);
+                allUsers.remove(user);
                 allUsers.add(u);
+                return;                
             }
-        }
+        }        
     }
 
     public static void deleteUser(long id) throws UserException {
 
-        allUsers.remove(doesUserExist(id));
+        allUsers.remove(valid.canBeDeleted(id));
+
+    }
+
+    public static User fillEmptyValues(User newVersion, User oldVersion) {
+        if (newVersion.getAge() == 0) {
+            newVersion.setAge(oldVersion.getAge());
+        }
+        try {
+            newVersion.getFirstName();
+        } catch (NullPointerException e) {
+            newVersion.setFirstName(oldVersion.getFirstName());
+        }
+        try {
+            newVersion.getLastName();
+        } catch (NullPointerException e) {
+            newVersion.setLastName(oldVersion.getLastName());
+        }
+        try {
+            newVersion.getTelephone();
+        } catch (NullPointerException e) {
+            newVersion.setTelephone(oldVersion.getTelephone());
+        }
+        return newVersion;
 
     }
 }
