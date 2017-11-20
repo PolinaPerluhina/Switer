@@ -23,11 +23,11 @@ public class User extends Model {
     private int age;
     private String telephone;
 
-    public User() {
+    public User() {       
     }
 
-    public User(long id, String email, String password, String firstName, String lastName, int age, String telephone) {
-        this.id = id;
+    public User(String email, String password, String firstName, String lastName, int age, String telephone) {
+        this.generateId();
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -41,7 +41,7 @@ public class User extends Model {
     }
 
     public void setId(long id) {
-        this.id = id;
+        generateId();
     }
 
     public String getEmail() {
@@ -94,7 +94,6 @@ public class User extends Model {
 
     public User copyProperties() {
         User newUser = new User();
-        newUser.setId(this.getId());
         newUser.setEmail(this.getEmail());
         newUser.setPassword(this.getPassword());
         newUser.setFirstName(this.getFirstName());
@@ -127,12 +126,11 @@ public class User extends Model {
             this.setTelephone(copyFrom.getTelephone());
         }
     }
-    
+
     /*
     Possibility to send for POST not all fields. This method will fullfill
     missed fields with empty values;
      */
-
     public void fillMissedFields() {
         if (this.getEmail() == null) {
             this.setEmail("");
@@ -149,5 +147,14 @@ public class User extends Model {
         if (this.getTelephone() == null) {
             this.setTelephone("");
         }
+    }
+
+    private void generateId() {
+        String id = "";
+        for (int i = 0; i < 6; i++) {
+            id += Math.round(Math.random() * 10);
+        }
+        long newId = Long.parseLong(id);
+        this.id = newId;
     }
 }

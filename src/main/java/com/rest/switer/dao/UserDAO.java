@@ -23,9 +23,9 @@ public class UserDAO {
     public static Validation valid = new UserValidation();
 
     static {
-        User user1 = new User(1223, "ivan@mail.com", "password1", "Ivan", "Ivanov", 25, "123-123-123");
-        User user2 = new User(4522, "anna@mail.com", "password2", "Anna", "Ivanova", 36, "568-591-002");
-        User user3 = new User(5728, "alina@mail.com", "password3", "Alina", "Ivanova", 19, "335-564-821");
+        User user1 = new User("ivan@mail.com", "password1", "Ivan", "Ivanov", 25, "123-123-123");
+        User user2 = new User("anna@mail.com", "password2", "Anna", "Ivanova", 36, "568-591-002");
+        User user3 = new User("alina@mail.com", "password3", "Alina", "Ivanova", 19, "335-564-821");
 
         allUsers.add(user1);
         allUsers.add(user2);
@@ -42,6 +42,7 @@ public class UserDAO {
 
     public static void addUser(User u) throws UserException {
         valid.canBeAdded(u);
+        u.setId(0);
         allUsers.add(u);
 
     }

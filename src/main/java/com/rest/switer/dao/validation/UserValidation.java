@@ -21,9 +21,15 @@ public class UserValidation implements Validation {
     public UserValidation() {
     }
 
+    public static void noId(User u) {
+        long id = u.getId();
+        if (id != 0) {
+            throw new UserException(403, NO_ADD_ID);
+        }
+    }
+
     public static void idValidation(User u) {
         int status = 400;
-        List<User> all = UserDAO.getAllUsers();
 
         long id = u.getId();
         if (id == 0) {
@@ -32,34 +38,6 @@ public class UserValidation implements Validation {
         if (id < 0) {
             throw new UserException(status, NOT_VALID_ID);
         }
-        for (User user : all) {
-            if (user.getId() == id) {
-                throw new UserException(status, ID_USED);
-            }
-        }
-
-    }
-    
-    public static void idNotSet(User u){
-        int status = 403;
-        long id = u.getId();
-        if (id!= 0){
-            throw new UserException(status, NO_ADD_ID);
-        }
-    }
-
-    public static void idPresent(User u) {
-        int status = 400;
-        List<User> all = UserDAO.getAllUsers();
-
-        long id = u.getId();
-        if (id == 0) {
-            throw new UserException(status, ID_MISSED);
-        }
-        if (id < 0) {
-            throw new UserException(status, NOT_VALID_ID);
-        }
-
     }
 
     public static User doesUserExist(long id) {
@@ -127,8 +105,8 @@ public class UserValidation implements Validation {
 
     @Override
     public void canBeAdded(Model m) {
-        User u = (User) m; 
-        idNotSet(u);
+        User u = (User) m;
+        noId(u);
         emailValidation(u);
         passwordPresent(u);
     }
@@ -136,8 +114,8 @@ public class UserValidation implements Validation {
     @Override
     public void canBeUpdated(Model m) {
         User u = (User) m;
-        idPresent(u);
-        
+        idValidation(u);
+        doesUserExist(u.getId());
 
     }
 
