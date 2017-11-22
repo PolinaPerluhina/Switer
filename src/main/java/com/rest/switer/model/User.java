@@ -35,13 +35,23 @@ public class User extends Model {
         this.age = age;
         this.telephone = telephone;
     }
+    
+    public User(long id, String email, String password, String firstName, String lastName, int age, String telephone) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.telephone = telephone;
+    }
 
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
-        generateId();
+        this.id = id;
     }
 
     public String getEmail() {
@@ -90,17 +100,7 @@ public class User extends Model {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
-    }
-
-    public User copyProperties() {
-        User newUser = new User();
-        newUser.setEmail(this.getEmail());
-        newUser.setPassword(this.getPassword());
-        newUser.setFirstName(this.getFirstName());
-        newUser.setLastName(this.getLastName());
-        newUser.setTelephone(this.getTelephone());
-        return newUser;
-    }
+    }   
 
     /*
     Possibility to send for PUT not all fields. This method will fullfill
@@ -149,12 +149,12 @@ public class User extends Model {
         }
     }
 
-    private void generateId() {
-        String id = "";
+    public void generateId() {
+        String generated = "";
         for (int i = 0; i < 6; i++) {
-            id += Math.round(Math.random() * 10);
+            generated += Math.round(Math.random() * 10);
         }
-        long newId = Long.parseLong(id);
+        long newId = Long.parseLong(generated);
         this.id = newId;
     }
 }

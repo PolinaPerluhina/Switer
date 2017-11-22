@@ -44,7 +44,7 @@ public class UserValidation implements Validation {
         List<User> all = UserDAO.getAllUsers();
         boolean present = false;
         User toDelete = null;
-        for (User user : all) {
+        for (User user : all) {            
             if (user.getId() == id) {
                 present = true;
                 toDelete = user;
@@ -113,9 +113,11 @@ public class UserValidation implements Validation {
 
     @Override
     public void canBeUpdated(Model m) {
-        User u = (User) m;
-        idValidation(u);
+        User u = (User) m;             
+        System.out.println(u.getId()+" - catched in validation user id");
+        idValidation(u);        
         doesUserExist(u.getId());
+        
 
     }
 

@@ -43,7 +43,8 @@ public class UserService {
 
     @PUT
     @Produces({MediaType.APPLICATION_JSON})
-    public void updateUser(User user) {
+    public void updateUser(User user) {        
+        System.out.println(user.getId()+" - entered by user id");
         UserDAO.updateUserInfo(user);
     }
 

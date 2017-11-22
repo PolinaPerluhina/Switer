@@ -42,12 +42,12 @@ public class UserDAO {
 
     public static void addUser(User u) throws UserException {
         valid.canBeAdded(u);
-        u.setId(0);
+        u.generateId();
         allUsers.add(u);
 
     }
 
-    public static void updateUserInfo(User u) throws UserException {
+    public static void updateUserInfo(User u) throws UserException {         
         valid.canBeUpdated(u);       
         for (User user: allUsers){
             if (user.getId()==u.getId()){ 
