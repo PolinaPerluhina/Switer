@@ -5,6 +5,11 @@
  */
 package com.rest.switer.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -13,14 +18,25 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @author Palina_Piarlukhina
  */
 //@JsonInclude(Include.NON_EMPTY)
+
+@Entity
+@Table(name = "users")
 public class User extends Model {
 
+    @Id
+    @Column(name="id")
     private long id;
+    @Column(name="email")
     private String email;
+    @Column(name="password")
     private String password;
+    @Column(name = "firstName")
     private String firstName;
+    @Column(name="lastName")
     private String lastName;
+    @Column(name="age")
     private int age;
+    @Column(name="telephone")
     private String telephone;
 
     public User() {       

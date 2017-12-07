@@ -5,13 +5,18 @@
  */
 package com.rest.switer.dao;
 
-import com.rest.switer.dao.validation.UserValidation;
-import static com.rest.switer.dao.validation.UserValidation.*;
-import com.rest.switer.dao.validation.Validation;
-import com.rest.switer.model.User;
-import com.rest.switer.exceptions.UserException;
+import static com.rest.switer.dao.validation.UserValidation.doesUserExist;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.Session;
+
+import com.rest.switer.dao.hiber.HibernateUtil;
+import com.rest.switer.dao.validation.UserValidation;
+import com.rest.switer.dao.validation.Validation;
+import com.rest.switer.exceptions.UserException;
+import com.rest.switer.model.User;
 
 /**
  *
@@ -19,17 +24,24 @@ import java.util.List;
  */
 public class UserDAO {
 
-    private static List<User> allUsers = new ArrayList<User>();
+    private static List<User> allUsers = new ArrayList<>();
     public static Validation valid = new UserValidation();
 
+
     static {
-        User user1 = new User("ivan@mail.com", "password1", "Ivan", "Ivanov", 25, "123-123-123");
+       /* User user1 = new User("ivan@mail.com", "password1", "Ivan", "Ivanov", 25, "123-123-123");
         User user2 = new User("anna@mail.com", "password2", "Anna", "Ivanova", 36, "568-591-002");
         User user3 = new User("alina@mail.com", "password3", "Alina", "Ivanova", 19, "335-564-821");
 
         allUsers.add(user1);
         allUsers.add(user2);
-        allUsers.add(user3);
+        allUsers.add(user3);*/
+
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
+        allUsers = s.createQuery("SELECT * FROM users").list();
+        s.getTransaction().commit();
+        s.close();
     }
 
     public static User getUser(long id) throws UserException {
