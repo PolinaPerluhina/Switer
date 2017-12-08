@@ -18,13 +18,14 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("users")
 public class UserService {
+    UserDAO dao = new UserDAO();
 
     // URI:
     // /switer-1.0/rest/users
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public List<User> getAllUsers() {
-        List<User> listOfUsers = UserDAO.getAllUsers();
+        List<User> listOfUsers = dao.getAllUsers();
         return listOfUsers;
     }
 

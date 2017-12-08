@@ -23,9 +23,22 @@ import com.rest.switer.model.User;
  * @author Palina_Piarlukhina
  */
 public class UserDAO {
+    
+    private static List<User> allUsers;
+    public static Validation valid;
+    
+    public UserDAO(){
+    allUsers = new ArrayList<User>();
+    valid = new UserValidation();
+    
+    Session s = HibernateUtil.getSessionFactory().openSession();
+    s.beginTransaction();
+    allUsers = (ArrayList<User>) s.createQuery("FROM User").list();
+    s.getTransaction().commit();
+    s.close();
+    }
 
-    private static List<User> allUsers = new ArrayList<>();
-    public static Validation valid = new UserValidation();
+    
 
 
     static {
@@ -35,13 +48,7 @@ public class UserDAO {
 
         allUsers.add(user1);
         allUsers.add(user2);
-        allUsers.add(user3);*/
-
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        s.beginTransaction();
-        allUsers = s.createQuery("SELECT * FROM users").list();
-        s.getTransaction().commit();
-        s.close();
+        allUsers.add(user3);*/       
     }
 
     public static User getUser(long id) throws UserException {
