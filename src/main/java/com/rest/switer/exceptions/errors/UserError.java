@@ -24,7 +24,7 @@ public enum UserError {
     
     //PASSWORD VALIDATION
     NO_PASSWORD(new ErrorDTO( 8, "Password is missing.")),
-    PASSWORD_NOT_VALID(new ErrorDTO( 9, "Password is too simple."));
+    PASSWORD_NOT_VALID(new ErrorDTO( 9, "Password is too simple."));    
     
     
     private final ErrorDTO err;

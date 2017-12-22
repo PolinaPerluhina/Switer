@@ -6,7 +6,6 @@
 package com.rest.switer.exceptions;
 
 import com.rest.switer.exceptions.errors.UserError;
-import static com.rest.switer.exceptions.errors.UserError.NOT_VALID_ID;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

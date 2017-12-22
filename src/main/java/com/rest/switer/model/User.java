@@ -5,23 +5,21 @@
  */
 package com.rest.switer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  *
  * @author Palina_Piarlukhina
  */
 //@JsonInclude(Include.NON_EMPTY)
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "users")
-public class User extends Model {
+public class User implements Model {
 
     @Id
     @Column(name="id")

@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -33,26 +34,27 @@ public class UserService {
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public User getUser(@PathParam("id") long id) {
-        return UserDAO.getUser(id);
+        return dao.getUser(id);
     }
 
     @POST
-    @Produces({MediaType.APPLICATION_JSON})
-    public void addUser(User user) {
-        UserDAO.addUser(user);
+    @Produces({MediaType.APPLICATION_JSON})    
+    public Response addUser(User user) {
+        User created = dao.addUser(user);
+        return Response.ok(created).status(Response.Status.OK).build();
     }
 
     @PUT
     @Produces({MediaType.APPLICATION_JSON})
-    public void updateUser(User user) {        
-        System.out.println(user.getId()+" - entered by user id");
-        UserDAO.updateUserInfo(user);
+    public Response updateUser(User user) {        
+        User updated = dao.updateUserInfo(user);
+        return Response.ok(updated).status(Response.Status.OK).build();
     }
 
     @DELETE
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public void deleteMessage(@PathParam("id") long id) {
-        UserDAO.deleteUser(id);
+        dao.deleteUser(id);
     }
 }

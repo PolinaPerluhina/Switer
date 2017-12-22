@@ -6,16 +6,37 @@
 package com.rest.switer.dao.validation;
 
 import com.rest.switer.model.Model;
+import org.hibernate.Session;
 
 /**
  *
  * @author Palina_Piarlukhina
  */
 public interface Validation {
-        
-    public abstract void canBeAdded(Model m);
-    public abstract void canBeUpdated(Model m);
-    public abstract Model canBeDeleted(long id);
     
+    /* 
+    GET VALIDATIONS COMMON:
+    *id of model is valid    
+    */
+    public abstract void canBeGot(long id);
+        
+    /* 
+    ADD VALIDATIONS COMMON:
+    *id of model not present    
+    */
+    public abstract void canBeAdded(Model m);
+    
+    /* 
+    UPDATE VALIDATIONS COMMON:
+    *id of model is present 
+    *id of model is valid 
+    */    
+    public abstract void canBeUpdated(Model m);
+    
+     /* 
+    DELETE VALIDATIONS COMMON:   
+    *id of model is valid 
+    */
+    public abstract void canBeDeleted(long id);
    
 }

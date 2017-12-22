@@ -9,6 +9,6 @@ package com.rest.switer.model;
  *
  * @author Palina_Piarlukhina
  */
-public class Model {
+public interface Model {
     
 }
